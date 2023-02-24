@@ -2,7 +2,7 @@
 setwd(dirname(rstudioapi::getActiveDocumentContext()$path))
 library(tidyverse)
 library(stringi)
-
+library(rebus)
 
 
 #Data Import
@@ -12,4 +12,10 @@ length(citations)-length(citations_txt)
 mean(str_length(citations_txt))
 
 #Data Cleaning
-sample(citations_txt, size = 10)
+writeLines(sample(citations_txt, size = 10))
+
+citations_tbl <- tibble(line=1:length(citations_txt),cite=citations_txt) %>% 
+  str_remove_all(citations_txt[1:5],'["\']') %>% 
+  mutate(year = str_extract(cite,pattern = "(" %R% one_or_more(DGT) %R% ")"))  
+  
+  
