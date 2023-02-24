@@ -7,6 +7,9 @@ library(stringi)
 
 #Data Import
 citations <- stri_read_lines("../data/citations.txt",encoding = "latin1")
-citations_txt <- stri_isempty(citations)
-length(citations[citations_txt])
+citations_txt <- citations[!stri_isempty(citations)]
+length(citations)-length(citations_txt)
+mean(str_length(citations_txt))
 
+#Data Cleaning
+sample(citations_txt, size = 10)
